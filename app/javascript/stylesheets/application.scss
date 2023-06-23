@@ -1,4 +1,21 @@
 .chat-room {
   height: 100vh;
   overflow-y: hidden;
+
+  .chat-box {
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+    width: 100%;
+
+    input[type="text"] {
+      height: 45px;
+      font-size: 18px;
+      padding: 8px;
+    }
+
+    .btn {
+      height: 45px;
+    }
+  }
 }
