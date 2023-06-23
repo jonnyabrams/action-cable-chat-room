@@ -1,13 +1,14 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-3">
+    <p>Hello, <%= current_user.username %></p>
       <%= render 'form', room: Room.new %>
       <hr>
       <% @rooms.each do |room| %>
         <%= link_to room do %>
           <div class="card mb-2">
             <div class="card-body">
-              <%= room.name %>
+              <p><%= room.name %>
             </div>
           </div>
         <% end %>
@@ -15,7 +16,15 @@
     </div>
     <div class="col-9">
       <% if @room.present? %>
-        <%= @room.name %>
+        <div class="chat-room">  
+          <p><%= @room.name %></p>
+          <% @room.messages.each do |message| %>
+            <p><%= message.content %></p>
+          <% end %>
+          <div class="chat-box">
+            <%= render 'messages/form', message: Message.new, room: @room %>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
