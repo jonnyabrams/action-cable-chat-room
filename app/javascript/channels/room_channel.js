@@ -1,32 +1,37 @@
 import consumer from "./consumer";
 
-consumer.subscriptions.create(
-  { channel: "RoomChannel", room_id: 1 },
-  {
-    connected() {
-      console.log("Connected!");
-    },
+document.addEventListener("turbolinks:load", () => {
+  const roomIdElement = document.getElementById("room-id");
+  const roomId = Number(roomIdElement.getAttribute("data-room-id"));
 
-    disconnected() {
-      // Called when the subscription has been terminated by the server
-    },
+  consumer.subscriptions.create(
+    { channel: "RoomChannel", room_id: roomId },
+    {
+      connected() {
+        console.log(`Connected to Room ${roomId}!`);
+      },
 
-    received(data) {
-      const userIdElement = document.getElementById("user-id");
-      const userId = Number(userIdElement.getAttribute("data-user-id"));
+      disconnected() {
+        // Called when the subscription has been terminated by the server
+      },
 
-      let html;
+      received(data) {
+        const userIdElement = document.getElementById("user-id");
+        const userId = Number(userIdElement.getAttribute("data-user-id"));
 
-      if (userId === data.message.user_id) {
-        html = data.mine;
-      } else {
-        html = data.theirs;
-      }
+        let html;
 
-      const messageContainer = document.getElementById("messages");
+        if (userId === data.message.user_id) {
+          html = data.mine;
+        } else {
+          html = data.theirs;
+        }
 
-      // append new message to existing messages
-      messageContainer.innerHTML = messageContainer.innerHTML + html;
-    },
-  }
-);
+        const messageContainer = document.getElementById("messages");
+
+        // append new message to existing messages
+        messageContainer.innerHTML = messageContainer.innerHTML + html;
+      },
+    }
+  );
+});
