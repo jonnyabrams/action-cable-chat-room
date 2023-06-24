@@ -4,7 +4,7 @@ consumer.subscriptions.create(
   { channel: "RoomChannel", room_id: 1 },
   {
     connected() {
-      console.log("Connected!")
+      console.log("Connected!");
     },
 
     disconnected() {
@@ -12,7 +12,10 @@ consumer.subscriptions.create(
     },
 
     received(data) {
-      console.log(data)
+      const messageContainer = document.getElementById("messages");
+
+      // append new message to existing messages
+      messageContainer.innerHTML = messageContainer.innerHTML + data.html;
     },
   }
 );
